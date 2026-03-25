@@ -1,0 +1,9 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" fill="#F8F5F0"/>
+  <rect x="118" y="88" width="274" height="544" rx="28" fill="#D4A373"/>
+  <rect x="430" y="88" width="274" height="544" rx="28" fill="#0F766E"/>
+  <rect x="742" y="88" width="340" height="544" rx="28" fill="#1F2937"/>
+  <text x="786" y="180" fill="#E5E7EB" font-family="Arial, sans-serif" font-size="28" letter-spacing="8">GALLERY</text>
+  <text x="786" y="280" fill="#FFFFFF" font-family="Georgia, serif" font-size="56" font-weight="700">Launch visuals</text>
+  <text x="786" y="346" fill="#FFFFFF" font-family="Georgia, serif" font-size="56" font-weight="700">and BTS stills</text>
+</svg>

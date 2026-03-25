@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f6efe7;
+  --foreground: #172121;
+  --muted: #6d6f73;
+  --card: rgba(255, 255, 255, 0.72);
+  --card-border: rgba(23, 33, 33, 0.08);
+  --accent: #d38344;
+  --accent-strong: #985723;
+  --teal: #0f766e;
+  --sand: #e6cfb1;
+  --shadow: 0 24px 60px rgba(32, 24, 19, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-canvas: var(--background);
+  --color-ink: var(--foreground);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-teal: var(--teal);
+  --color-sand: var(--sand);
+  --font-sans: var(--font-bricolage);
+  --font-display: var(--font-cormorant);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #121210;
+    --foreground: #f7f4ee;
+    --muted: #beb5a9;
+    --card: rgba(32, 29, 24, 0.72);
+    --card-border: rgba(247, 244, 238, 0.08);
+    --accent: #efb06d;
+    --accent-strong: #f9c688;
+    --teal: #63c4bb;
+    --sand: #2d2923;
+    --shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-bricolage), sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background-image:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(circle at 20% 0%, rgba(211, 131, 68, 0.12), transparent 32%),
+    radial-gradient(circle at 100% 10%, rgba(15, 118, 110, 0.12), transparent 28%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(211, 131, 68, 0.22);
+}
+
+.glass-panel {
+  background: var(--card);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow);
+}
+
+.eyebrow {
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: var(--accent-strong);
+}
+
+.display-title {
+  font-family: var(--font-cormorant), serif;
+}
+
+.surface-grid {
+  background-image:
+    linear-gradient(rgba(23, 33, 33, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 33, 33, 0.05) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+@keyframes marquee-slide {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.brand-marquee-track {
+  animation: marquee-slide 30s linear infinite;
+}
+
+.brand-marquee-track:hover {
+  animation-play-state: paused;
+}
