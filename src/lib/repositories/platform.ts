@@ -514,7 +514,10 @@ export async function getOrderByPaymentReference(reference: string) {
   }
 
   const metadata = (order.metadata ?? {}) as Record<string, unknown>;
+  let ticketId: string | null = null;
   let ticketReference: string | null = null;
+  let ticketQrCodeDataUrl: string | null = null;
+  let ticketEventTitle: string | null = null;
 
   if (String(metadata.kind ?? "") === "ticket") {
     const { data: ticketOrder } = await supabase
@@ -526,11 +529,23 @@ export async function getOrderByPaymentReference(reference: string) {
     if (ticketOrder?.ticket_id) {
       const { data: ticket } = await supabase
         .from("tickets")
-        .select("reference")
+        .select("id, reference, qr_code_path, event_id")
         .eq("id", ticketOrder.ticket_id)
         .maybeSingle();
 
+      ticketId = ticket?.id ?? null;
       ticketReference = ticket?.reference ?? null;
+      ticketQrCodeDataUrl = ticket?.qr_code_path ?? null;
+
+      if (ticket?.event_id) {
+        const { data: event } = await supabase
+          .from("events")
+          .select("title")
+          .eq("id", ticket.event_id)
+          .maybeSingle();
+
+        ticketEventTitle = event?.title ?? null;
+      }
     }
   }
 
@@ -546,7 +561,10 @@ export async function getOrderByPaymentReference(reference: string) {
         : typeof metadata.customerEmail === "string"
           ? metadata.customerEmail
           : null,
+    ticketId,
     ticketReference,
+    ticketQrCodeDataUrl,
+    ticketEventTitle,
     confirmationEmailSentAt:
       typeof metadata.confirmationEmailSentAt === "string"
         ? metadata.confirmationEmailSentAt

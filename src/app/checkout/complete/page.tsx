@@ -25,7 +25,7 @@ export default async function CheckoutCompletePage({ searchParams }: CheckoutCom
     ? "Payment confirmed and order stored."
     : "Payment submitted. Awaiting secure confirmation.";
   const description = isPaid
-    ? "The backend has verified your transaction. If this was a ticket purchase, your confirmation email includes the reference code and QR image."
+    ? "The backend has verified your transaction. For ticket purchases, your QR and reference are below and in your confirmation email — save or print for entry."
     : "Paystack redirects before the webhook round-trip is guaranteed. We only confirm payment after the server verifies the webhook and updates your order.";
 
   return (
@@ -40,6 +40,39 @@ export default async function CheckoutCompletePage({ searchParams }: CheckoutCom
           <div><strong className="text-ink">Order kind:</strong> {order?.kind ?? "payment"}</div>
           {order?.ticketReference ? (
             <div><strong className="text-ink">Ticket:</strong> {order.ticketReference}</div>
+          ) : null}
+          {order?.ticketEventTitle ? (
+            <div><strong className="text-ink">Event:</strong> {order.ticketEventTitle}</div>
+          ) : null}
+          {order?.ticketQrCodeDataUrl ? (
+            <div className="flex flex-col items-start gap-3 pt-2">
+              <strong className="text-ink">Entry QR</strong>
+              {/* eslint-disable-next-line @next/next/no-img-element -- data URL from DB */}
+              <img
+                src={order.ticketQrCodeDataUrl}
+                alt=""
+                width={220}
+                height={220}
+                className="rounded-2xl border border-card-border bg-white p-2"
+              />
+              <p className="text-xs text-muted">
+                Staff scan this code or type the ticket reference. You can also open{" "}
+                <Link href="/account" className="font-semibold text-accent-strong">
+                  My account
+                </Link>{" "}
+                for a printable ticket.
+              </p>
+            </div>
+          ) : null}
+          {order?.ticketId ? (
+            <div className="print:hidden">
+              <Link
+                href={`/account/tickets/${order.ticketId}/print`}
+                className="text-sm font-semibold text-accent-strong hover:underline"
+              >
+                Open printable ticket
+              </Link>
+            </div>
           ) : null}
           <div>
             <strong className="text-ink">Email confirmation:</strong>{" "}

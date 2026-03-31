@@ -114,7 +114,10 @@ export function EventCreationForm() {
         </p>
       </div>
 
-      <form className="mt-8 grid gap-4 md:grid-cols-2" onSubmit={onSubmit}>
+      <form
+        className="mt-8 grid gap-4 md:grid-cols-2 [&_label>span]:text-stone-200 [&_input:not([type='checkbox'])]:text-stone-900 [&_textarea]:text-stone-900"
+        onSubmit={onSubmit}
+      >
         <div className="md:col-span-2">
           <Input label="Event title" placeholder="Stories at Sunset" {...form.register("title")} />
         </div>

@@ -192,11 +192,7 @@ export async function finalizeSuccessfulPayment(
         throw new Error(ticketError.message);
       }
 
-      qrCodeDataUrl = await generateTicketQrDataUrl(
-        createdTicket.id,
-        createdTicket.reference,
-        createdTicket.event_id,
-      );
+      qrCodeDataUrl = await generateTicketQrDataUrl(createdTicket.reference);
       await supabase
         .from("tickets")
         .update({ qr_code_path: qrCodeDataUrl })

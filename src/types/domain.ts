@@ -139,6 +139,10 @@ export type CheckoutOrderState = {
   totalCents: number;
   paymentReference: string;
   customerEmail: string | null;
+  ticketId: string | null;
   ticketReference: string | null;
+  /** Data URL PNG for display / print; null if not yet generated. */
+  ticketQrCodeDataUrl: string | null;
+  ticketEventTitle: string | null;
   confirmationEmailSentAt: string | null;
 };

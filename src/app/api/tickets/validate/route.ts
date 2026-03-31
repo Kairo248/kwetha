@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getTicketRecordByReference } from "@/lib/repositories/platform";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { ticketValidationSchema } from "@/lib/schemas";
+import { normalizeTicketScanInput } from "@/lib/ticket-scan";
 import { getTicketValidationMessage } from "@/lib/ticketing";
 
 export const runtime = "nodejs";
@@ -14,10 +15,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: parsed.error.issues[0]?.message }, { status: 400 });
   }
 
+  const ticketReference = normalizeTicketScanInput(parsed.data.code);
+  if (ticketReference.length < 6) {
+    return NextResponse.json({ message: "Ticket reference is required." }, { status: 400 });
+  }
+
   const supabase = createSupabaseAdminClient();
   if (supabase) {
     const { data, error } = await supabase.rpc("validate_ticket_scan", {
-      p_ticket_reference: parsed.data.code,
+      p_ticket_reference: ticketReference,
       p_event_id: parsed.data.eventId || null,
     });
 
@@ -31,7 +37,7 @@ export async function POST(request: Request) {
     });
   }
 
-  const ticket = await getTicketRecordByReference(parsed.data.code);
+  const ticket = await getTicketRecordByReference(ticketReference);
 
   if (!ticket) {
     return NextResponse.json({ message: "Ticket not found." }, { status: 404 });

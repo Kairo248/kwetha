@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { startTransition, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,10 @@ export function EventIntakeForm({ event }: EventIntakeFormProps) {
       city: "",
     },
   });
+
+  useEffect(() => {
+    setAudience(null);
+  }, [event.id]);
 
   const onSubmit = (values: EventRegistrationInput) => {
     startTransition(() => {
@@ -78,6 +82,18 @@ export function EventIntakeForm({ event }: EventIntakeFormProps) {
       <h2 className="display-title text-4xl leading-none sm:text-5xl">
         Collect DOB before checkout so category assignment stays deterministic.
       </h2>
+      <div className="mt-6 rounded-3xl border border-card-border p-5">
+        <div className="text-xs uppercase tracking-[0.22em] text-muted">Selected ticket</div>
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div className="text-2xl font-semibold text-ink">{event.title}</div>
+            <div className="mt-1 text-sm text-muted">{event.dateLabel} · {event.venue}</div>
+          </div>
+          <div className="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white">
+            R {event.price.toFixed(2)}
+          </div>
+        </div>
+      </div>
       <p className="mt-5 max-w-xl text-sm leading-7 text-muted sm:text-base">
         This form previews the youth versus senior logic used before payment begins.
         In production, the same rules run on the backend before ticket allocation,
@@ -93,7 +109,7 @@ export function EventIntakeForm({ event }: EventIntakeFormProps) {
         <div className="flex flex-wrap items-center gap-4 pt-2">
           <Button type="submit">Check category</Button>
           <Button type="button" variant="secondary" onClick={handleTicketCheckout} disabled={isSubmitting}>
-            {isSubmitting ? "Starting checkout..." : "Continue to payment"}
+            {isSubmitting ? "Starting checkout..." : `Buy ${event.title}`}
           </Button>
           {audience ? (
             <span className="rounded-full bg-sand px-4 py-2 text-sm font-semibold text-accent-strong dark:bg-sand/30">

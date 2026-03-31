@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { TicketQrCamera } from "@/components/admin/ticket-qr-camera";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ticketValidationSchema, type TicketValidationInput } from "@/lib/schemas";
@@ -41,11 +42,20 @@ export function TicketScanner() {
       <p className="eyebrow mb-4">Mobile-Friendly Scan Station</p>
       <h2 className="display-title text-4xl leading-none sm:text-5xl">Validate entry without duplicate admissions.</h2>
       <p className="mt-4 text-sm leading-7 text-muted sm:text-base">
-        Enter a QR-decoded ticket reference or wire this form to a camera scanner on mobile.
+        Scan the guest&apos;s QR (same code as on email and printable ticket), or enter the reference by hand if
+        the camera is unavailable.
       </p>
 
+      <div className="mt-8">
+        <TicketQrCamera
+          onDecoded={(ticketReference) => {
+            form.setValue("code", ticketReference, { shouldValidate: true });
+          }}
+        />
+      </div>
+
       <form className="mt-8 grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
-        <Input label="Ticket reference" placeholder="IKW-2026-0001" {...form.register("code")} />
+        <Input label="Ticket reference (plan B — manual entry)" placeholder="IKW-2026-0001" {...form.register("code")} />
         <Input label="Event ID" placeholder="Optional event UUID" {...form.register("eventId")} />
         <Button type="submit">Validate ticket</Button>
       </form>

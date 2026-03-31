@@ -26,7 +26,7 @@ export default async function AccountPage() {
           .order("created_at", { ascending: false }),
         supabase
           .from("tickets")
-          .select("id, reference, status, audience_category, created_at, event_id")
+          .select("id, reference, status, audience_category, created_at, event_id, qr_code_path")
           .eq("user_id", user.id)
           .order("created_at", { ascending: false }),
       ])
@@ -93,11 +93,28 @@ export default async function AccountPage() {
           <div className="mt-6 space-y-4">
             {ticketsResult.data?.length ? ticketsResult.data.map((ticket) => (
               <article key={ticket.id} className="rounded-3xl border border-card-border p-5">
-                <div className="font-semibold">{eventMap.get(ticket.event_id) ?? "Event ticket"}</div>
-                <div className="mt-1 text-sm text-muted">{ticket.reference}</div>
-                <div className="mt-3 flex items-center justify-between text-sm">
-                  <span className="capitalize text-muted">{ticket.audience_category}</span>
-                  <span className="capitalize text-muted">{ticket.status}</span>
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <div className="font-semibold">{eventMap.get(ticket.event_id) ?? "Event ticket"}</div>
+                    <div className="mt-1 font-mono text-sm text-muted">{ticket.reference}</div>
+                    <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+                      <span className="capitalize text-muted">{ticket.audience_category}</span>
+                      <span className="text-muted">·</span>
+                      <span className="capitalize text-muted">{ticket.status}</span>
+                    </div>
+                    <Link
+                      href={`/account/tickets/${ticket.id}/print`}
+                      className="mt-3 inline-block text-sm font-semibold text-accent-strong hover:underline"
+                    >
+                      Printable ticket
+                    </Link>
+                  </div>
+                  {ticket.qr_code_path ? (
+                    <div className="shrink-0 self-start rounded-2xl border border-card-border bg-white/80 p-2 dark:bg-white/10">
+                      {/* eslint-disable-next-line @next/next/no-img-element -- data URL */}
+                      <img src={ticket.qr_code_path} alt="" width={120} height={120} className="rounded-xl" />
+                    </div>
+                  ) : null}
                 </div>
               </article>
             )) : (
