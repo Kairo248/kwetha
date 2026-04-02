@@ -19,18 +19,18 @@ export function HeroSection({ hero }: HeroSectionProps) {
   ];
 
   return (
-    <section className="mx-auto grid max-w-7xl gap-8 px-4 pt-8 pb-10 md:grid-cols-[1.1fr_0.9fr] md:px-8 md:pt-12">
+    <section className="mx-auto grid max-w-7xl gap-6 px-4 pt-6 pb-8 sm:gap-8 sm:pt-8 sm:pb-10 md:grid-cols-[1.1fr_0.9fr] md:px-8 md:pt-12">
       <motion.div
         initial={{ opacity: 0, y: 32 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="glass-panel rounded-[2.5rem] p-8 md:p-12"
+        className="glass-panel rounded-[1.75rem] p-6 sm:rounded-[2.5rem] sm:p-8 md:p-12"
       >
-        <p className="eyebrow mb-4">{hero.eyebrow}</p>
-        <h1 className="display-title max-w-4xl text-5xl leading-none sm:text-6xl lg:text-7xl">
+        <p className="eyebrow mb-3 sm:mb-4">{hero.eyebrow}</p>
+        <h1 className="display-title max-w-4xl text-[2.4rem] leading-[1.05] tracking-tight sm:text-5xl sm:leading-none md:text-6xl lg:text-7xl">
           {hero.title}
         </h1>
-        <p className="mt-6 max-w-2xl text-base leading-8 text-muted sm:text-lg">
+        <p className="mt-6 max-w-2xl text-[0.9375rem] leading-7 text-muted sm:text-base sm:leading-8 md:text-lg">
           {hero.description}
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
@@ -41,17 +41,17 @@ export function HeroSection({ hero }: HeroSectionProps) {
             {hero.secondaryCtaLabel}
           </Button>
         </div>
-        <div className="mt-10 grid gap-4 sm:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-4">
           {metrics.map((metric, index) => (
             <motion.div
               key={metric.label}
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.15 + index * 0.1 }}
-              className="rounded-[1.75rem] border border-card-border bg-white/40 p-5 dark:bg-white/5"
+              className="rounded-[1.5rem] border border-card-border bg-white/40 p-4 sm:rounded-[1.75rem] sm:p-5 dark:bg-white/5"
             >
-              <div className="text-3xl font-semibold">{metric.value}</div>
-              <div className="mt-2 text-sm text-muted">{metric.label}</div>
+              <div className="text-2xl font-semibold tabular-nums sm:text-3xl">{metric.value}</div>
+              <div className="mt-1.5 text-xs leading-snug text-muted sm:mt-2 sm:text-sm">{metric.label}</div>
             </motion.div>
           ))}
         </div>
@@ -61,7 +61,7 @@ export function HeroSection({ hero }: HeroSectionProps) {
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.1 }}
-        className="relative overflow-hidden rounded-[2.5rem] border border-card-border bg-[#1d1714] p-8 text-white shadow-[0_28px_80px_rgba(16,12,9,0.35)]"
+        className="relative overflow-hidden rounded-[1.75rem] border border-card-border bg-[#1d1714] p-5 text-white shadow-[0_28px_80px_rgba(16,12,9,0.35)] sm:rounded-[2.5rem] sm:p-8"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(239,176,109,0.32),transparent_36%),radial-gradient(circle_at_bottom_left,rgba(99,196,187,0.22),transparent_28%)]" />
         <div className="relative flex h-full flex-col justify-between gap-8">

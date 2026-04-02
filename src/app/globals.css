@@ -114,3 +114,13 @@ a {
 .brand-marquee-track:hover {
   animation-play-state: paused;
 }
+
+/* Horizontal scroll regions (e.g. admin nav on small screens) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

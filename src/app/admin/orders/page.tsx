@@ -6,10 +6,10 @@ export default async function AdminOrdersPage() {
   const orderInsights = await getOrderAdminInsights();
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12 md:px-8">
       <div className="max-w-3xl">
-        <p className="eyebrow mb-4">Admin / Orders</p>
-        <h1 className="display-title text-5xl leading-none sm:text-6xl">
+        <p className="eyebrow mb-3 sm:mb-4">Admin / Orders</p>
+        <h1 className="display-title text-[2rem] leading-[1.1] tracking-tight sm:text-5xl sm:leading-none md:text-6xl">
           Monitor customer activity across products and tickets.
         </h1>
       </div>

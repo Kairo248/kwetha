@@ -1,12 +1,13 @@
-import Image from "next/image";
 import { BrandCreationForm } from "@/components/admin/brand-creation-form";
+import { BrandSliderPanel } from "@/components/admin/brand-slider-panel";
 import { ContentCreationForm } from "@/components/admin/content-creation-form";
+import { ContentLibraryPanel } from "@/components/admin/content-library-panel";
 import { HeroEditorForm } from "@/components/admin/hero-editor-form";
 import { StatsGrid } from "@/components/admin/stats-grid";
 import { getBrands, getContentCollection, getHomeHero } from "@/lib/repositories/platform";
 
 export default async function AdminContentPage() {
-  const [{ items: contentItems }, { items: brands }, { item: hero }] = await Promise.all([
+  const [{ items: contentItems, source: contentSource }, { items: brands, source: brandsSource }, { item: hero }] = await Promise.all([
     getContentCollection({ includeDrafts: true }),
     getBrands({ includeInactive: true }),
     getHomeHero(),
@@ -35,13 +36,13 @@ export default async function AdminContentPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12 md:px-8">
       <div className="max-w-3xl">
-        <p className="eyebrow mb-4">Admin / Content</p>
-        <h1 className="display-title text-5xl leading-none sm:text-6xl">
+        <p className="eyebrow mb-3 sm:mb-4">Admin / Content</p>
+        <h1 className="display-title text-[2rem] leading-[1.1] tracking-tight sm:text-5xl sm:leading-none md:text-6xl">
           Manage brand-facing content, media uploads, and logo partners in one workspace.
         </h1>
-        <p className="mt-6 text-base leading-8 text-muted sm:text-lg">
+        <p className="mt-4 text-[0.9375rem] leading-7 text-muted sm:mt-6 sm:text-base sm:leading-8 md:text-lg">
           This is the editorial and brand-collaboration layer for Lilitha’s campaign work. Upload images, videos, and partner brands that feed directly into the public experience.
         </p>
       </div>
@@ -71,40 +72,8 @@ export default async function AdminContentPage() {
             </div>
           </div>
 
-          <div className="mt-8 grid gap-4">
-            {contentItems.length ? contentItems.map((item) => (
-              <article key={item.id} className="rounded-3xl border border-card-border p-5">
-                <div className="flex gap-4">
-                  <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-3xl bg-sand/60 dark:bg-sand/15">
-                    {item.kind === "video" && item.assetUrl ? (
-                      <video src={item.assetUrl} className="h-full w-full object-cover" muted playsInline />
-                    ) : item.imageUrl ? (
-                      <Image src={item.imageUrl} alt={item.title} fill className="object-cover" unoptimized />
-                    ) : (
-                      <div className="surface-grid h-full w-full" />
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-xl font-semibold">{item.title}</h3>
-                      <span className="rounded-full bg-sand px-3 py-1 text-xs font-semibold text-accent-strong">
-                        {item.kind}
-                      </span>
-                      {item.category ? (
-                        <span className="rounded-full border border-card-border px-3 py-1 text-xs font-semibold text-muted">
-                          {item.category}
-                        </span>
-                      ) : null}
-                    </div>
-                    <p className="mt-3 text-sm leading-7 text-muted">{item.excerpt}</p>
-                  </div>
-                </div>
-              </article>
-            )) : (
-              <div className="rounded-3xl border border-dashed border-card-border p-5 text-sm text-muted">
-                No content items yet. Create a new upload from the form above.
-              </div>
-            )}
+          <div className="mt-8">
+            <ContentLibraryPanel items={contentItems} allowDelete={contentSource === "supabase"} />
           </div>
         </section>
 
@@ -119,28 +88,8 @@ export default async function AdminContentPage() {
             </div>
           </div>
 
-          <div className="mt-8 grid gap-4">
-            {brands.length ? brands.map((brand) => (
-              <article key={brand.id} className="rounded-3xl border border-card-border p-5">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-18 w-22 shrink-0 items-center justify-center overflow-hidden rounded-3xl bg-stone-950/90 p-3">
-                    {brand.logoUrl ? (
-                      <Image src={brand.logoUrl} alt={brand.name} width={96} height={40} className="max-h-10 w-auto object-contain" unoptimized />
-                    ) : (
-                      <span className="text-xs font-semibold uppercase tracking-[0.28em] text-white">{brand.name.slice(0, 2)}</span>
-                    )}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold">{brand.name}</h3>
-                    <p className="mt-2 text-sm leading-7 text-muted">{brand.description}</p>
-                  </div>
-                </div>
-              </article>
-            )) : (
-              <div className="rounded-3xl border border-dashed border-card-border p-5 text-sm text-muted">
-                No active brands yet. Add one to power the homepage slider.
-              </div>
-            )}
+          <div className="mt-8">
+            <BrandSliderPanel items={brands} allowDelete={brandsSource === "supabase"} />
           </div>
         </section>
       </div>

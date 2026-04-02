@@ -83,25 +83,41 @@ export function StorePanel({ products }: StorePanelProps) {
   };
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
-      <div className="grid gap-5 md:grid-cols-2">
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(280px,340px)]">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
         {products.map((product) => (
-          <article key={product.id} className="glass-panel rounded-4xl overflow-hidden">
+          <article
+            key={product.id}
+            className="glass-panel flex min-w-0 h-full flex-col overflow-hidden rounded-2xl sm:rounded-3xl md:rounded-4xl"
+          >
             {product.imageUrl ? (
-              <Image src={product.imageUrl} alt={product.title} width={640} height={420} className="h-56 w-full object-cover" unoptimized />
+              <Image
+                src={product.imageUrl}
+                alt={product.title}
+                width={640}
+                height={420}
+                className="h-28 w-full object-cover sm:h-40 md:h-48 lg:h-52"
+                unoptimized
+              />
             ) : (
-              <div className="surface-grid h-56 bg-sand/60 dark:bg-sand/15" />
+              <div className="surface-grid h-28 bg-sand/60 sm:h-40 md:h-48 lg:h-52 dark:bg-sand/15" />
             )}
-            <div className="p-6">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <h2 className="text-2xl font-semibold">{product.title}</h2>
-                  <p className="mt-2 text-sm text-muted">{product.category}</p>
+            <div className="flex flex-1 flex-col p-3 sm:p-4 md:p-6">
+              <div className="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
+                <div className="min-w-0 flex-1">
+                  <h2 className="line-clamp-2 text-sm font-semibold leading-snug tracking-tight sm:text-lg md:text-xl lg:text-2xl">
+                    {product.title}
+                  </h2>
+                  <p className="mt-0.5 text-[0.65rem] text-muted sm:mt-1 sm:text-sm">{product.category}</p>
                 </div>
-                <div className="text-xl font-semibold">R {product.price.toFixed(2)}</div>
+                <div className="shrink-0 text-xs font-semibold tabular-nums sm:text-base md:text-lg lg:text-xl">
+                  R {product.price.toFixed(2)}
+                </div>
               </div>
-              <p className="mt-4 text-sm leading-7 text-muted">{product.description}</p>
-              <Button className="mt-6 w-full" onClick={() => addItem(product)}>
+              <p className="mt-2 line-clamp-2 text-[0.65rem] leading-5 text-muted sm:mt-3 sm:line-clamp-3 sm:text-sm sm:leading-7">
+                {product.description}
+              </p>
+              <Button className="mt-3 w-full text-xs sm:mt-4 sm:text-sm md:mt-6" onClick={() => addItem(product)}>
                 Add to cart
               </Button>
             </div>
@@ -109,7 +125,7 @@ export function StorePanel({ products }: StorePanelProps) {
         ))}
       </div>
 
-      <aside className="glass-panel h-fit rounded-4xl p-6 lg:sticky lg:top-24">
+      <aside className="glass-panel h-fit rounded-3xl p-5 sm:rounded-4xl sm:p-6 lg:sticky lg:top-24">
         <div className="flex items-center gap-3">
           <ShoppingCart className="h-5 w-5 text-accent-strong" />
           <h3 className="text-xl font-semibold">Cart</h3>

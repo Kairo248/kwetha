@@ -32,9 +32,9 @@ export function DashboardSnapshot() {
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3">
       {query.data.source === "preview" ? (
-        <div className="glass-panel rounded-4xl p-6 text-sm text-muted md:col-span-3">
+        <div className="glass-panel rounded-4xl p-6 text-sm text-muted sm:col-span-2 md:col-span-3">
           Preview metrics are showing because the Supabase backend is not connected yet.
         </div>
       ) : null}

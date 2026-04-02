@@ -21,12 +21,12 @@ type InteractionTableProps = {
 export function InteractionTable({ title, eyebrow, emptyMessage, columns, rows }: InteractionTableProps) {
   return (
     <section className="glass-panel overflow-hidden rounded-4xl">
-      <div className="flex items-center justify-between gap-4 px-6 py-6 md:px-8">
-        <div>
-          <p className="eyebrow mb-3">{eyebrow}</p>
-          <h2 className="text-3xl font-semibold">{title}</h2>
+      <div className="flex flex-col gap-4 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6 sm:py-6 md:px-8">
+        <div className="min-w-0">
+          <p className="eyebrow mb-2 sm:mb-3">{eyebrow}</p>
+          <h2 className="text-2xl font-semibold leading-tight sm:text-3xl">{title}</h2>
         </div>
-        <div className="rounded-full border border-card-border px-4 py-2 text-sm font-semibold text-muted">
+        <div className="shrink-0 self-start rounded-full border border-card-border px-3 py-1.5 text-xs font-semibold text-muted sm:self-center sm:px-4 sm:py-2 sm:text-sm">
           {rows.length} rows
         </div>
       </div>

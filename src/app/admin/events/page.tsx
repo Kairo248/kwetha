@@ -11,18 +11,18 @@ export default async function AdminEventsPage() {
   ]);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12 md:px-8">
       <div className="max-w-3xl">
-        <p className="eyebrow mb-4">Admin / Events</p>
-        <h1 className="display-title text-5xl leading-none sm:text-6xl">
+        <p className="eyebrow mb-3 sm:mb-4">Admin / Events</p>
+        <h1 className="display-title text-[2rem] leading-[1.1] tracking-tight sm:text-5xl sm:leading-none md:text-6xl">
           Event operations with quota visibility.
         </h1>
-        <p className="mt-6 text-base leading-8 text-muted sm:text-lg">
+        <p className="mt-4 text-[0.9375rem] leading-7 text-muted sm:mt-6 sm:text-base sm:leading-8 md:text-lg">
           Create new events from the admin console, then watch them appear in the operational list below.
         </p>
       </div>
 
-      <div className="mt-10 grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
+      <div className="mt-8 grid gap-6 sm:mt-10 sm:gap-8 xl:grid-cols-[0.95fr_1.05fr]">
         <EventCreationForm />
 
         <EventOperationsPanel events={events} />

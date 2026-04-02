@@ -13,9 +13,9 @@ export function StatsGrid({ stats, preview = false }: StatsGridProps) {
           Preview analytics are showing because Supabase data is not connected for this view yet.
         </div>
       ) : null}
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
         {stats.map((stat) => (
-          <div key={stat.label} className="glass-panel rounded-4xl p-6">
+          <div key={stat.label} className="glass-panel rounded-3xl p-5 sm:rounded-4xl sm:p-6">
             <div className="text-sm text-muted">{stat.label}</div>
             <div className="mt-3 text-3xl font-semibold">{stat.value}</div>
             <div className="mt-2 text-sm leading-6 text-muted">{stat.detail}</div>

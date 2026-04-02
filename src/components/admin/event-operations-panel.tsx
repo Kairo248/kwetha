@@ -30,7 +30,7 @@ export function EventOperationsPanel({ events }: EventOperationsPanelProps) {
   }
 
   return (
-    <div className="grid gap-5">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
       {events.map((event) => (
         <EditableEventCard key={event.id} event={event} />
       ))}
@@ -150,7 +150,7 @@ function EditableEventCard({ event }: { event: PlatformEvent }) {
   };
 
   return (
-    <article className="glass-panel overflow-hidden rounded-4xl p-8">
+    <article className="glass-panel overflow-hidden rounded-3xl p-5 sm:rounded-4xl sm:p-8">
       <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
         <div className="flex flex-1 gap-5">
           {bannerPreviewUrl ? (

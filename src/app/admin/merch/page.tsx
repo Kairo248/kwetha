@@ -12,22 +12,22 @@ export default async function AdminMerchPage() {
   const merchItems = products.filter((item) => item.category.toLowerCase() === "merch");
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12 md:px-8">
       <div className="max-w-3xl">
-        <p className="eyebrow mb-4">Admin / Merch</p>
-        <h1 className="display-title text-5xl leading-none sm:text-6xl">
+        <p className="eyebrow mb-3 sm:mb-4">Admin / Merch</p>
+        <h1 className="display-title text-[2rem] leading-[1.1] tracking-tight sm:text-5xl sm:leading-none md:text-6xl">
           Run merch drops, inventory, and product launches from the same console.
         </h1>
-        <p className="mt-6 text-base leading-8 text-muted sm:text-lg">
+        <p className="mt-4 text-[0.9375rem] leading-7 text-muted sm:mt-6 sm:text-base sm:leading-8 md:text-lg">
           The merch workspace is separate from the public store so operations can add catalog items without touching the customer-facing shell.
         </p>
       </div>
 
-      <div className="mt-10 grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
+      <div className="mt-8 grid gap-6 sm:mt-10 sm:gap-8 xl:grid-cols-[0.95fr_1.05fr]">
         <MerchCreationForm />
 
-        <section className="glass-panel rounded-4xl p-8">
-          <div className="flex items-center justify-between gap-4">
+        <section className="glass-panel rounded-3xl p-5 sm:rounded-4xl sm:p-8">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
             <div>
               <p className="eyebrow mb-3">Catalog Snapshot</p>
               <h2 className="text-3xl font-semibold">Current merch inventory</h2>

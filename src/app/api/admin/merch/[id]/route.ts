@@ -81,6 +81,25 @@ export async function DELETE(_request: Request, context: RouteContext) {
     .eq("id", id)
     .maybeSingle();
 
+  const { count: orderLineCount, error: countError } = await supabase
+    .from("order_items")
+    .select("id", { count: "exact", head: true })
+    .eq("item_id", id);
+
+  if (countError) {
+    return NextResponse.json({ message: countError.message }, { status: 500 });
+  }
+
+  if ((orderLineCount ?? 0) > 0) {
+    return NextResponse.json(
+      {
+        message:
+          "This product is on one or more orders and cannot be deleted. Turn it off in the catalog (uncheck Active) instead.",
+      },
+      { status: 409 },
+    );
+  }
+
   const { error } = await supabase.from("items").delete().eq("id", id);
 
   if (error) {

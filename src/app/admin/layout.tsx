@@ -28,7 +28,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
           Signed in as {access.profile.fullName ?? "Admin"}. <Link href="/">Back to public site</Link>
         </div>
       ) : null}
-      {children}
+      <div className="pb-10 md:pb-12">{children}</div>
     </div>
   );
 }
