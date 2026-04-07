@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Ticket, ShoppingBag, TvMinimalPlay } from "lucide-react";
+import { ArrowUpRight, Ticket, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { HomeHero } from "@/types/domain";
 
@@ -19,101 +19,131 @@ export function HeroSection({ hero }: HeroSectionProps) {
   ];
 
   return (
-    <section className="mx-auto grid max-w-7xl gap-6 px-4 pt-6 pb-8 sm:gap-8 sm:pt-8 sm:pb-10 md:grid-cols-[1.1fr_0.9fr] md:px-8 md:pt-12">
+    <section className="mx-auto grid max-w-7xl gap-8 px-4 pt-6 pb-10 sm:gap-10 sm:pt-8 sm:pb-12 md:grid-cols-2 md:gap-10 md:px-8 md:pt-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:gap-12">
       <motion.div
         initial={{ opacity: 0, y: 32 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="glass-panel rounded-[1.75rem] p-6 sm:rounded-[2.5rem] sm:p-8 md:p-12"
+        className="order-2 flex flex-col justify-center md:order-1"
       >
-        <p className="eyebrow mb-3 sm:mb-4">{hero.eyebrow}</p>
-        <h1 className="display-title max-w-4xl text-[2.4rem] leading-[1.05] tracking-tight sm:text-5xl sm:leading-none md:text-6xl lg:text-7xl">
-          {hero.title}
-        </h1>
-        <p className="mt-6 max-w-2xl text-[0.9375rem] leading-7 text-muted sm:text-base sm:leading-8 md:text-lg">
-          {hero.description}
-        </p>
-        <div className="mt-8 flex flex-wrap gap-4">
-          <Button asLink href={hero.primaryCtaHref}>
-            {hero.primaryCtaLabel}
-          </Button>
-          <Button asLink href={hero.secondaryCtaHref} variant="secondary">
-            {hero.secondaryCtaLabel}
-          </Button>
-        </div>
-        <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-4">
-          {metrics.map((metric, index) => (
-            <motion.div
-              key={metric.label}
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 + index * 0.1 }}
-              className="rounded-[1.5rem] border border-card-border bg-white/40 p-4 sm:rounded-[1.75rem] sm:p-5 dark:bg-white/5"
-            >
-              <div className="text-2xl font-semibold tabular-nums sm:text-3xl">{metric.value}</div>
-              <div className="mt-1.5 text-xs leading-snug text-muted sm:mt-2 sm:text-sm">{metric.label}</div>
-            </motion.div>
-          ))}
+        <div className="glass-panel rounded-[1.75rem] p-6 sm:rounded-[2.5rem] sm:p-8 md:p-12">
+          <p className="eyebrow mb-3 sm:mb-4">{hero.eyebrow}</p>
+          <h1 className="display-title max-w-4xl text-[2.4rem] leading-[1.05] tracking-tight sm:text-5xl sm:leading-none md:text-6xl lg:text-7xl">
+            {hero.title}
+          </h1>
+          <p className="mt-6 max-w-2xl text-[0.9375rem] leading-7 text-muted sm:text-base sm:leading-8 md:text-lg">
+            {hero.description}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Button asLink href={hero.primaryCtaHref}>
+              {hero.primaryCtaLabel}
+            </Button>
+            <Button asLink href={hero.secondaryCtaHref} variant="secondary">
+              {hero.secondaryCtaLabel}
+            </Button>
+          </div>
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-4">
+            {metrics.map((metric, index) => (
+              <motion.div
+                key={metric.label}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 + index * 0.1 }}
+                className="rounded-3xl border border-card-border bg-white/40 p-4 sm:rounded-[1.75rem] sm:p-5 dark:bg-white/5"
+              >
+                <div className="text-2xl font-semibold tabular-nums sm:text-3xl">{metric.value}</div>
+                <div className="mt-1.5 text-xs leading-snug text-muted sm:mt-2 sm:text-sm">{metric.label}</div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.1 }}
-        className="relative overflow-hidden rounded-[1.75rem] border border-card-border bg-[#1d1714] p-5 text-white shadow-[0_28px_80px_rgba(16,12,9,0.35)] sm:rounded-[2.5rem] sm:p-8"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.75, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+        className="order-1 flex min-h-0 flex-col gap-5 md:order-2 lg:gap-6"
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(239,176,109,0.32),transparent_36%),radial-gradient(circle_at_bottom_left,rgba(99,196,187,0.22),transparent_28%)]" />
-        <div className="relative flex h-full flex-col justify-between gap-8">
-          <div className="rounded-4xl border border-white/10 bg-white/5 p-6 backdrop-blur">
-            <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-white/70">
-              <span>Video-first Hero</span>
-              <TvMinimalPlay className="h-4 w-4" />
-            </div>
-            <div className="mt-8 rounded-[1.75rem] bg-white/6 p-5">
-              <div className="surface-grid relative flex h-56 items-end overflow-hidden rounded-3xl bg-white/6 p-4">
-                {hero.mediaKind === "video" && hero.mediaUrl ? (
-                  <video src={hero.mediaUrl} className="absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline />
-                ) : hero.mediaUrl ? (
-                  <Image src={hero.mediaUrl} alt={hero.mediaTitle} fill className="object-cover" unoptimized />
-                ) : null}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
-                <div className="relative z-10">
-                  <div className="text-xs uppercase tracking-[0.3em] text-white/60">
-                    {hero.mediaEyebrow}
-                  </div>
-                  <div className="display-title mt-3 text-4xl">{hero.mediaTitle}</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div
+          className={
+            "relative isolate w-full overflow-hidden rounded-4xl border border-white/8 bg-[#0c0a09] shadow-[0_32px_120px_-24px_rgba(0,0,0,0.55)] ring-1 ring-white/6 sm:rounded-[2.25rem] lg:rounded-[2.5rem]"
+          }
+        >
+          <div className="relative h-[min(68vh,620px)] w-full sm:h-[min(52vh,440px)] md:h-[min(56vh,500px)] lg:h-[min(80vh,760px)]">
+            {hero.mediaKind === "video" && hero.mediaUrl ? (
+              <video
+                src={hero.mediaUrl}
+                className="absolute inset-0 h-full w-full scale-[1.01] object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            ) : hero.mediaUrl ? (
+              <Image
+                src={hero.mediaUrl}
+                alt={hero.mediaTitle}
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+                unoptimized
+              />
+            ) : (
+              <div className="absolute inset-0 bg-linear-to-br from-stone-800 via-stone-900 to-black" />
+            )}
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Link
-              href="/store"
-              className="rounded-[1.75rem] border border-white/12 bg-white/5 p-5 transition hover:bg-white/10"
-            >
-              <ShoppingBag className="h-5 w-5 text-[#efb06d]" />
-              <div className="mt-4 text-lg font-semibold">Commerce</div>
-              <div className="mt-2 text-sm leading-7 text-white/70">
-                Books, merch, and future product drops.
+            <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-black/10" />
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/70 to-transparent" />
+
+            <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 md:p-10 lg:p-12">
+              <div className="max-w-xl">
+                <p className="text-[0.65rem] font-medium uppercase tracking-[0.35em] text-white/55 sm:text-xs">
+                  {hero.mediaEyebrow}
+                </p>
+                <h2 className="display-title mt-3 text-3xl leading-[1.05] tracking-tight text-white sm:mt-4 sm:text-4xl md:text-5xl lg:text-[3.25rem] lg:leading-[1.02]">
+                  {hero.mediaTitle}
+                </h2>
               </div>
-            </Link>
-            <Link
-              href="/events"
-              className="rounded-[1.75rem] border border-white/12 bg-white/5 p-5 transition hover:bg-white/10"
-            >
-              <Ticket className="h-5 w-5 text-[#efb06d]" />
-              <div className="mt-4 text-lg font-semibold">Ticketing</div>
-              <div className="mt-2 text-sm leading-7 text-white/70">
-                DOB-aware category assignment and QR validation.
+            </div>
+
+            {hero.mediaKind === "video" && hero.mediaUrl ? (
+              <div className="pointer-events-none absolute right-5 top-5 sm:right-6 sm:top-6">
+                <span className="inline-flex items-center rounded-full border border-white/15 bg-black/35 px-3 py-1.5 text-[0.65rem] font-medium uppercase tracking-[0.2em] text-white/90 backdrop-blur-md sm:text-xs">
+                  Video
+                </span>
               </div>
-            </Link>
+            ) : null}
           </div>
-          <div className="flex items-center justify-between text-sm text-white/70">
-            <span>Built for Vercel + Supabase</span>
-            <ArrowUpRight className="h-4 w-4" />
-          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <Link
+            href="/store"
+            className="group rounded-2xl border border-card-border/80 bg-card/50 p-4 transition hover:border-accent/30 hover:bg-card sm:rounded-3xl sm:p-5"
+          >
+            <ShoppingBag className="h-5 w-5 text-accent sm:h-6 sm:w-6" />
+            <div className="mt-3 text-sm font-semibold sm:mt-4 sm:text-base">Commerce</div>
+            <div className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted sm:mt-2 sm:text-sm">
+              Books, merch, and future product drops.
+            </div>
+          </Link>
+          <Link
+            href="/events"
+            className="group rounded-2xl border border-card-border/80 bg-card/50 p-4 transition hover:border-accent/30 hover:bg-card sm:rounded-3xl sm:p-5"
+          >
+            <Ticket className="h-5 w-5 text-accent sm:h-6 sm:w-6" />
+            <div className="mt-3 text-sm font-semibold sm:mt-4 sm:text-base">Ticketing</div>
+            <div className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted sm:mt-2 sm:text-sm">
+              DOB-aware categories and QR validation.
+            </div>
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-between gap-3 border-t border-card-border/60 pt-4 text-xs text-muted sm:text-sm">
+          <span>Built for Vercel + Supabase</span>
+          <ArrowUpRight className="h-4 w-4 shrink-0 text-muted" aria-hidden />
         </div>
       </motion.div>
     </section>
