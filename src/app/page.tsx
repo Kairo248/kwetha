@@ -18,10 +18,50 @@ export default async function Home() {
 
   const featuredEvent = events[0];
   const featuredProduct = products[0];
+  const homepageFeeds = content.filter((item) => item.featured).slice(0, 3);
+  const visibleHomepageFeeds = homepageFeeds.length ? homepageFeeds : content.slice(0, 3);
+  const heroFeaturedFeed = visibleHomepageFeeds[0];
+  const secondaryHomepageFeeds = visibleHomepageFeeds.slice(1);
 
   return (
     <div className="pb-20">
       <HeroSection hero={hero} />
+
+      {heroFeaturedFeed ? (
+        <section className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-10">
+          <article className="glass-panel overflow-hidden rounded-4xl">
+            <div className="relative h-64 overflow-hidden bg-sand/60 sm:h-80 md:h-112 dark:bg-sand/15">
+              {heroFeaturedFeed.kind === "video" && heroFeaturedFeed.assetUrl ? (
+                <video src={heroFeaturedFeed.assetUrl} className="h-full w-full object-cover" muted playsInline loop />
+              ) : heroFeaturedFeed.imageUrl ? (
+                <Image src={heroFeaturedFeed.imageUrl} alt={heroFeaturedFeed.title} fill className="object-cover" unoptimized />
+              ) : (
+                <div className="surface-grid h-full w-full px-6 py-6" />
+              )}
+            </div>
+            <div className="p-6 md:p-8">
+              <p className="eyebrow mb-3">Featured Feed</p>
+              <h2 className="text-3xl font-semibold md:text-4xl">{heroFeaturedFeed.title}</h2>
+              {heroFeaturedFeed.category ? (
+                <p className="mt-3 text-xs font-semibold uppercase tracking-[0.22em] text-accent-strong">
+                  {heroFeaturedFeed.category}
+                </p>
+              ) : null}
+              <p className="mt-4 text-sm leading-7 text-muted md:text-base md:leading-8">{heroFeaturedFeed.excerpt}</p>
+            </div>
+          </article>
+        </section>
+      ) : (
+        <section className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-10">
+          <div className="glass-panel rounded-4xl p-8 md:p-10">
+            <p className="eyebrow mb-3">Featured Feed</p>
+            <h2 className="text-3xl font-semibold md:text-4xl">Nothing featured yet</h2>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-muted md:text-base md:leading-8">
+              Once you add and feature a feed item in admin, it will show up here under the hero section.
+            </p>
+          </div>
+        </section>
+      )}
 
       <section className="mx-auto grid max-w-7xl gap-6 px-4 py-10 md:grid-cols-4 md:px-8">
         {[
@@ -83,68 +123,88 @@ export default async function Home() {
         </div>
 
         <div className="grid gap-6">
-          <article className="glass-panel rounded-4xl p-8">
-            <p className="eyebrow mb-4">Featured Event</p>
-            {featuredEvent.imageUrl ? (
-              <Image src={featuredEvent.imageUrl} alt={featuredEvent.title} width={720} height={360} className="mb-6 h-52 w-full rounded-3xl object-cover" unoptimized />
-            ) : null}
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h3 className="text-2xl font-semibold">{featuredEvent.title}</h3>
-                <p className="mt-2 text-sm text-muted">{featuredEvent.dateLabel}</p>
+          {featuredEvent ? (
+            <article className="glass-panel rounded-4xl p-8">
+              <p className="eyebrow mb-4">Featured Event</p>
+              {featuredEvent.imageUrl ? (
+                <Image src={featuredEvent.imageUrl} alt={featuredEvent.title} width={720} height={360} className="mb-6 h-52 w-full rounded-3xl object-cover" unoptimized />
+              ) : null}
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-2xl font-semibold">{featuredEvent.title}</h3>
+                  <p className="mt-2 text-sm text-muted">{featuredEvent.dateLabel}</p>
+                </div>
+                <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-white">
+                  {featuredEvent.venue}
+                </span>
               </div>
-              <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-white">
-                {featuredEvent.venue}
-              </span>
-            </div>
-            <p className="mt-5 text-sm leading-7 text-muted">{featuredEvent.summary}</p>
-            <div className="mt-6 grid grid-cols-3 gap-3 text-center text-sm">
-              <div className="rounded-3xl bg-sand/60 p-4 dark:bg-sand/30">
-                <div className="text-xl font-semibold">{featuredEvent.capacity}</div>
-                <div className="text-muted">Capacity</div>
+              <p className="mt-5 text-sm leading-7 text-muted">{featuredEvent.summary}</p>
+              <div className="mt-6 grid grid-cols-3 gap-3 text-center text-sm">
+                <div className="rounded-3xl bg-sand/60 p-4 dark:bg-sand/30">
+                  <div className="text-xl font-semibold">{featuredEvent.capacity}</div>
+                  <div className="text-muted">Capacity</div>
+                </div>
+                <div className="rounded-3xl bg-sand/60 p-4 dark:bg-sand/30">
+                  <div className="text-xl font-semibold">{featuredEvent.youthQuota}</div>
+                  <div className="text-muted">Youth</div>
+                </div>
+                <div className="rounded-3xl bg-sand/60 p-4 dark:bg-sand/30">
+                  <div className="text-xl font-semibold">{featuredEvent.seniorQuota}</div>
+                  <div className="text-muted">Senior</div>
+                </div>
               </div>
-              <div className="rounded-3xl bg-sand/60 p-4 dark:bg-sand/30">
-                <div className="text-xl font-semibold">{featuredEvent.youthQuota}</div>
-                <div className="text-muted">Youth</div>
-              </div>
-              <div className="rounded-3xl bg-sand/60 p-4 dark:bg-sand/30">
-                <div className="text-xl font-semibold">{featuredEvent.seniorQuota}</div>
-                <div className="text-muted">Senior</div>
-              </div>
-            </div>
-          </article>
+            </article>
+          ) : (
+            <article className="glass-panel rounded-4xl p-8">
+              <p className="eyebrow mb-4">Featured Event</p>
+              <h3 className="text-2xl font-semibold">No events yet</h3>
+              <p className="mt-4 text-sm leading-7 text-muted">
+                Add your first event from admin and it will appear here automatically.
+              </p>
+            </article>
+          )}
 
-          <article className="glass-panel rounded-4xl p-8">
-            <p className="eyebrow mb-4">Store Spotlight</p>
-            {featuredProduct.imageUrl ? (
-              <Image src={featuredProduct.imageUrl} alt={featuredProduct.title} width={720} height={360} className="mb-6 h-52 w-full rounded-3xl object-cover" unoptimized />
-            ) : null}
-            <h3 className="text-2xl font-semibold">{featuredProduct.title}</h3>
-            <p className="mt-4 text-sm leading-7 text-muted">{featuredProduct.description}</p>
-            <div className="mt-6 flex items-center justify-between">
-              <span className="text-2xl font-semibold">R {featuredProduct.price.toFixed(2)}</span>
-              <Button asLink href="/store">
-                Open Store
-              </Button>
-            </div>
-          </article>
+          {featuredProduct ? (
+            <article className="glass-panel rounded-4xl p-8">
+              <p className="eyebrow mb-4">Store Spotlight</p>
+              {featuredProduct.imageUrl ? (
+                <Image src={featuredProduct.imageUrl} alt={featuredProduct.title} width={720} height={360} className="mb-6 h-52 w-full rounded-3xl object-cover" unoptimized />
+              ) : null}
+              <h3 className="text-2xl font-semibold">{featuredProduct.title}</h3>
+              <p className="mt-4 text-sm leading-7 text-muted">{featuredProduct.description}</p>
+              <div className="mt-6 flex items-center justify-between">
+                <span className="text-2xl font-semibold">R {featuredProduct.price.toFixed(2)}</span>
+                <Button asLink href="/store">
+                  Open Store
+                </Button>
+              </div>
+            </article>
+          ) : (
+            <article className="glass-panel rounded-4xl p-8">
+              <p className="eyebrow mb-4">Store Spotlight</p>
+              <h3 className="text-2xl font-semibold">No products yet</h3>
+              <p className="mt-4 text-sm leading-7 text-muted">
+                Add products from admin to populate your storefront highlights.
+              </p>
+            </article>
+          )}
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-12 md:px-8">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
-            <p className="eyebrow mb-3">Media and Content</p>
+            <p className="eyebrow mb-3">Media and Feeds</p>
             <h2 className="display-title text-4xl leading-none sm:text-5xl">
               Dynamic publishing for articles, galleries, and campaigns.
             </h2>
           </div>
           <Link className="text-sm font-semibold text-accent-strong" href="/content">
-            View all content
+            View all feeds
           </Link>
         </div>
         <div className="grid gap-5 md:grid-cols-3">
-          {content.slice(0, 3).map((item) => (
+          {secondaryHomepageFeeds.map((item) => (
             <article key={item.id} className="glass-panel rounded-4xl overflow-hidden">
               <div className="relative h-48 overflow-hidden bg-sand/60 dark:bg-sand/15">
                 {item.kind === "video" && item.assetUrl ? (
@@ -167,6 +227,14 @@ export default async function Home() {
               </div>
             </article>
           ))}
+          {!secondaryHomepageFeeds.length ? (
+            <article className="glass-panel rounded-4xl p-6 md:col-span-3">
+              <h3 className="text-xl font-semibold">No additional feeds yet</h3>
+              <p className="mt-3 text-sm leading-7 text-muted">
+                More feed stories will appear here after you publish them from the admin content section.
+              </p>
+            </article>
+          ) : null}
         </div>
       </section>
 

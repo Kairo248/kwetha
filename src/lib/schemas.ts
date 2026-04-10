@@ -92,10 +92,19 @@ export const adminContentSchema = z.object({
   title: z.string().min(4, "Content title is required."),
   excerpt: z.string().min(12, "Add a fuller description."),
   kind: z.enum(["article", "video", "gallery", "image"]),
-  category: z.string().min(2, "Category is required."),
+  contentCategory: z.enum(["personal", "partnership"]),
+  partnerName: z.string().trim().optional(),
   assetPath: z.string().optional(),
   featured: z.boolean(),
   publishNow: z.boolean(),
+}).superRefine((values, context) => {
+  if (values.contentCategory === "partnership" && !values.partnerName) {
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["partnerName"],
+      message: "Partner name is required for partnership feeds.",
+    });
+  }
 });
 
 export const adminBrandSchema = z.object({

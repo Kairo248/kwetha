@@ -25,18 +25,24 @@ export async function POST(request: Request) {
   }
 
   const values = parsed.data;
+  const category = values.contentCategory === "partnership"
+    ? `Partnership: ${values.partnerName?.trim()}`
+    : "Personal";
   const { data, error } = await supabase
     .from("content")
     .insert({
       slug: buildSlug(values.title, "content"),
       title: values.title,
       excerpt: values.excerpt,
-      category: values.category,
+      category,
       content_kind: values.kind,
       storage_path: values.assetPath || null,
       featured: values.featured,
       published_at: values.publishNow ? new Date().toISOString() : null,
-      metadata: {},
+      metadata: {
+        contentCategory: values.contentCategory,
+        partnerName: values.contentCategory === "partnership" ? values.partnerName?.trim() ?? null : null,
+      },
     })
     .select("id, title")
     .single();

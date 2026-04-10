@@ -8,7 +8,36 @@ type BrandMarqueeProps = {
 
 export function BrandMarquee({ brands }: BrandMarqueeProps) {
   if (!brands.length) {
-    return null;
+    const placeholders = Array.from({ length: 6 }, (_, index) => ({
+      id: `brand-placeholder-${index}`,
+      text: "No brand collaborations yet - add your partners from admin.",
+    }));
+
+    return (
+      <section className="mx-auto max-w-7xl px-4 py-8 md:px-8">
+        <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="eyebrow mb-3">Brand Collaborations</p>
+            <h2 className="display-title text-4xl leading-none sm:text-5xl">
+              Partnerships, campaigns, and client work in motion.
+            </h2>
+          </div>
+          <p className="max-w-xl text-sm leading-7 text-muted">
+            This slider will populate as soon as you add brand partners in the admin dashboard.
+          </p>
+        </div>
+
+        <div className="overflow-hidden rounded-4xl border border-card-border/70 bg-white/35 py-4 shadow-[0_24px_60px_rgba(32,24,19,0.08)] dark:bg-white/5">
+          <div className="brand-marquee-track flex min-w-max gap-4 px-4">
+            {[...placeholders, ...placeholders].map((item, index) => (
+              <article key={`${item.id}-${index}`} className="flex w-96 shrink-0 items-center rounded-[1.75rem] border border-dashed border-card-border bg-canvas/80 px-5 py-4">
+                <p className="text-sm font-medium text-muted">{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
   }
 
   const repeated = [...brands, ...brands];

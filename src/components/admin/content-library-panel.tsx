@@ -40,6 +40,7 @@ function ContentLibraryRow({ item, allowDelete }: { item: ContentItem; allowDele
   const router = useRouter();
   const [status, setStatus] = useState<StatusState>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isUpdatingFeatured, setIsUpdatingFeatured] = useState(false);
 
   const deleteItem = async () => {
     const confirmed = window.confirm(`Delete “${item.title}”? This cannot be undone.`);
@@ -73,6 +74,39 @@ function ContentLibraryRow({ item, allowDelete }: { item: ContentItem; allowDele
     }
   };
 
+  const toggleFeatured = async () => {
+    setStatus(null);
+    setIsUpdatingFeatured(true);
+
+    try {
+      const response = await fetch(`/api/admin/content/${item.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          featured: !Boolean(item.featured),
+        }),
+      });
+
+      const payload = (await response.json().catch(() => null)) as { message?: string } | null;
+
+      if (!response.ok) {
+        throw new Error(payload?.message ?? "Could not update feature status.");
+      }
+
+      router.refresh();
+    } catch (error) {
+      setStatus({
+        tone: "error",
+        title: "Update failed",
+        message: error instanceof Error ? error.message : "Try again shortly.",
+      });
+    } finally {
+      setIsUpdatingFeatured(false);
+    }
+  };
+
   return (
     <article className="min-w-0 rounded-2xl border border-card-border p-3 sm:rounded-3xl sm:p-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
@@ -92,6 +126,11 @@ function ContentLibraryRow({ item, allowDelete }: { item: ContentItem; allowDele
               <span className="rounded-full bg-sand px-2 py-0.5 text-[0.65rem] font-semibold text-accent-strong sm:px-3 sm:py-1 sm:text-xs">
                 {item.kind}
               </span>
+              {item.featured ? (
+                <span className="rounded-full bg-accent px-2 py-0.5 text-[0.65rem] font-semibold text-white sm:px-3 sm:py-1 sm:text-xs">
+                  Front Page
+                </span>
+              ) : null}
               {item.category ? (
                 <span className="rounded-full border border-card-border px-2 py-0.5 text-[0.65rem] font-semibold text-muted sm:px-3 sm:py-1 sm:text-xs">
                   {item.category}
@@ -103,13 +142,22 @@ function ContentLibraryRow({ item, allowDelete }: { item: ContentItem; allowDele
         </div>
 
         {allowDelete ? (
-          <div className="flex shrink-0 sm:pt-1">
+          <div className="flex shrink-0 flex-wrap gap-2 sm:pt-1">
+            <Button
+              type="button"
+              variant="secondary"
+              className="w-full text-xs sm:w-auto sm:text-sm"
+              onClick={toggleFeatured}
+              disabled={isUpdatingFeatured || isDeleting}
+            >
+              {isUpdatingFeatured ? "Saving..." : item.featured ? "Remove from front page" : "Feature on front page"}
+            </Button>
             <Button
               type="button"
               variant="secondary"
               className="w-full border-rose-300 text-xs text-rose-700 hover:border-rose-500 hover:text-rose-800 sm:w-auto sm:text-sm dark:text-rose-200"
               onClick={deleteItem}
-              disabled={isDeleting}
+              disabled={isDeleting || isUpdatingFeatured}
             >
               {isDeleting ? "Deleting..." : "Delete"}
             </Button>

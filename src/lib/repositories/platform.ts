@@ -358,7 +358,7 @@ export async function getContentCollection(options?: { includeDrafts?: boolean }
 
   let query = supabase
     .from("content")
-    .select("id, content_kind, title, excerpt, category, storage_path, metadata, published_at")
+    .select("id, content_kind, title, excerpt, category, storage_path, metadata, featured, published_at")
     .order("created_at", { ascending: false });
 
   if (!options?.includeDrafts) {
@@ -379,6 +379,7 @@ export async function getContentCollection(options?: { includeDrafts?: boolean }
       title: item.title,
       excerpt: item.excerpt ?? "",
       category: item.category,
+      featured: item.featured,
       assetPath: item.storage_path,
       assetUrl: item.storage_path ? getAdminAssetPublicUrl(supabase, item.storage_path) : null,
       imageUrl:

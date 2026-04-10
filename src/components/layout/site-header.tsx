@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getViewerState } from "@/lib/auth";
 import { NAV_LINKS } from "@/lib/constants";
-import { SiteBrandMark } from "@/components/layout/site-brand-mark";
 import { SiteMobileNav } from "@/components/layout/site-mobile-nav";
 
 export async function SiteHeader() {
@@ -13,12 +12,7 @@ export async function SiteHeader() {
       data-public-shell="header"
       className="sticky top-0 z-40 border-b border-card-border/60 bg-canvas/80 backdrop-blur-xl"
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:py-4 md:gap-6 md:px-8">
-        <Link href="/" className="flex min-w-0 items-center gap-2 sm:gap-3">
-          <SiteBrandMark size="header" />
-          <div className="min-w-0">
-          </div>
-        </Link>
+      <div className="mx-auto flex max-w-7xl items-center justify-end gap-4 px-4 py-3 sm:py-4 md:gap-6 md:px-8">
         <nav className="hidden items-center gap-6 md:flex">
           {NAV_LINKS.map((link) => (
             <Link

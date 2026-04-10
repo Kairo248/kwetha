@@ -37,6 +37,7 @@ export type ContentItem = {
   title: string;
   excerpt: string;
   category?: string | null;
+  featured?: boolean;
   assetUrl?: string | null;
   assetPath?: string | null;
   imageUrl?: string | null;

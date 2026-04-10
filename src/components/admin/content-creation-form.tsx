@@ -29,7 +29,8 @@ export function ContentCreationForm() {
       title: "",
       excerpt: "",
       kind: "image",
-      category: "Brand Campaign",
+      contentCategory: "personal",
+      partnerName: "",
       assetPath: "",
       featured: true,
       publishNow: true,
@@ -37,6 +38,7 @@ export function ContentCreationForm() {
   });
 
   const contentKind = form.watch("kind");
+  const contentCategory = form.watch("contentCategory");
 
   const onSubmit = form.handleSubmit(async (values) => {
     setIsSubmitting(true);
@@ -79,7 +81,8 @@ export function ContentCreationForm() {
         title: "",
         excerpt: "",
         kind: values.kind,
-        category: values.category,
+        contentCategory: values.contentCategory,
+        partnerName: "",
         assetPath: "",
         featured: values.featured,
         publishNow: values.publishNow,
@@ -96,7 +99,7 @@ export function ContentCreationForm() {
   });
 
   return (
-    <section className="rounded-[2rem] border border-white/10 bg-stone-950 p-8 text-stone-50 shadow-[0_24px_80px_rgba(15,23,42,0.22)]">
+    <section className="rounded-4xl border border-white/10 bg-stone-950 p-8 text-stone-50 shadow-[0_24px_80px_rgba(15,23,42,0.22)]">
       <div className="max-w-2xl">
         <p className="text-xs font-semibold uppercase tracking-[0.28em] text-teal-300">Create Content</p>
         <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -125,7 +128,22 @@ export function ContentCreationForm() {
           </select>
         </label>
 
-        <Input label="Category" placeholder="Brand Campaign" {...form.register("category")} />
+        <label className="grid gap-2 text-sm font-medium text-stone-50">
+          <span>Feed category</span>
+          <select
+            className="h-12 rounded-2xl border border-white/10 bg-white/5 px-4 outline-none transition focus:border-teal-400"
+            {...form.register("contentCategory")}
+          >
+            <option value="personal">Personal</option>
+            <option value="partnership">Partnership</option>
+          </select>
+        </label>
+
+        {contentCategory === "partnership" ? (
+          <Input label="Partner name" placeholder="Nike" {...form.register("partnerName")} />
+        ) : (
+          <div />
+        )}
 
         <div className="md:col-span-2">
           <Textarea label="Description" placeholder="What the content is, who it was created for, and what it represents." {...form.register("excerpt")} />
@@ -164,7 +182,7 @@ export function ContentCreationForm() {
           <Button type="submit" disabled={isSubmitting} className="bg-teal-500 text-stone-950 hover:bg-teal-400">
             {isSubmitting ? "Saving content..." : "Create content"}
           </Button>
-          <p className="text-sm text-stone-400">Images and videos are uploaded to storage, while categories keep content organized around brand work.</p>
+          <p className="text-sm text-stone-400">Images and videos are uploaded to storage, while feed categories keep public content grouped as personal or partnership drops.</p>
         </div>
       </form>
     </section>
